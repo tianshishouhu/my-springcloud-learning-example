@@ -1,7 +1,7 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://hostA:8888/eureka/,http://hostB:8889/eureka/
+      defaultZone: http://peer1:8888/eureka/,http://peer2:8889/eureka/
 
 spring:
   application:
