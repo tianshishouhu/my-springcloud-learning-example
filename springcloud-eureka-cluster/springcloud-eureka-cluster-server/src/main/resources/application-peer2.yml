@@ -8,9 +8,10 @@ server:
 eureka:
   instance: 
     hostname: peer2
+    preferIpAddress: true
   client:
     registerWithEureka: true # 是否向 Eureka 注册服务。该应用为服务注册中心，不需要自注册，设置为 false
     fetchRegistry: true      # 是否检索服务。该应用为服务注册中心，职责为注册和发现服务，无需检索服务，设置为 false
     serviceUrl: 
-      defaultZone: http://peer1:8888/eureka/  
+      defaultZone: http://192.168.2.151:8888/eureka/  
    
