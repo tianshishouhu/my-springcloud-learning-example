@@ -1,4 +1,4 @@
-package cn.bocon;
+package cn.wj;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 // Spring Boot 应用的标识
 @SpringBootApplication
 //mapper 接口类扫描包配置
-@MapperScan("cn.bocon.mapper")
+@MapperScan("cn.wj.mapper")
 @EnableCaching
 @EnableScheduling
 public class Application {

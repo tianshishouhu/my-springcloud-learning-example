@@ -1,4 +1,4 @@
-package cn.bocon.service.impl;
+package cn.wj.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;

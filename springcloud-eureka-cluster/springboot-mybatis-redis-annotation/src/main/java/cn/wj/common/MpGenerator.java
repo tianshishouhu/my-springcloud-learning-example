@@ -1,4 +1,4 @@
-package cn.bocon.common;
+package cn.wj.common;
 
 /**
  * 版权所有：2017-广州博控自动化技术
@@ -39,13 +39,13 @@ public class MpGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("C:\\Users\\Administrator\\Desktop\\output");
+        gc.setOutputDir("D:\\output");
         gc.setFileOverride(true);
         gc.setActiveRecord(true);
         gc.setEnableCache(false);// XML 二级缓存
         gc.setBaseResultMap(true);// XML ResultMap
         gc.setBaseColumnList(false);// XML columList
-        gc.setAuthor("linxiaoqiang");
+        gc.setAuthor("wj");
 
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
         // gc.setMapperName("%sDao");
@@ -60,15 +60,15 @@ public class MpGenerator {
         dsc.setDbType(DbType.MYSQL);
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("vYJ^5Bj@XNZT64pK");
-        dsc.setUrl("jdbc:mysql://192.168.1.225:3306/pollantcms?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true");
+        dsc.setPassword("root");
+        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/calendar?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true");
         mpg.setDataSource(dsc);
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         strategy.setTablePrefix(new String[]{"test_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[] { "bus_rtd_data_latest"
+        strategy.setInclude(new String[] { "bus_all_holiday"
         }); // 需要生成的表
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 字段名生成策略
@@ -94,7 +94,7 @@ public class MpGenerator {
         mpg.setStrategy(strategy);
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("cn.bocon.pmpcms.datacenter");
+        pc.setParent("cn.wj");
         //pc.setModuleName("test");
         mpg.setPackageInfo(pc);
 
