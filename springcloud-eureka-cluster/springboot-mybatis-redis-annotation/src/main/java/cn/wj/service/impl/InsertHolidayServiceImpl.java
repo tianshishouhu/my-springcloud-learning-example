@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.google.common.collect.Lists;
 
 import cn.wj.entity.BusAllHoliday;
 import cn.wj.service.IBusAllHolidayService;
@@ -27,6 +28,103 @@ public class InsertHolidayServiceImpl implements IInsertHolidayService {
 	 * 
 	 * @see cn.wj.service.impl.IInsertHoliBusAllHolidayerivce#insertHoliday()
 	 */
+	@Override
+	public void insertHoliday() throws Exception {
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date start = sdf.parse("2016-01-01");// 开始时间
+		Date end = sdf.parse("2016-12-31");// 结束时间
+		try {
+			List<Date> lists = dateSplit(start, end);
+			// -------------------插入周末时间---------------
+			if (!lists.isEmpty()) {
+				for (Date date : lists) {
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(date);
+					if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+							|| cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+						System.out.println("插入日期:" + sdf.format(date) + ",周末");
+						BusAllHoliday busAllHoliday = new BusAllHoliday();
+						busAllHoliday.setTitle("周末");
+						busAllHoliday.setHolidayDate(sdf.format(date));
+						busAllHoliday.setCreateTime(new Date());
+						busAllHolidayService.insert(busAllHoliday);
+					}
+				}
+			}
+			// ---------------插入节假日时间------------------
+			List<BusAllHoliday> holiBusAllHoliday = Lists.newArrayList();
+			
+			holiBusAllHoliday.add(new BusAllHoliday("元旦", "2017-01-01", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("元旦", "2017-01-02", new Date()));
+			
+			holiBusAllHoliday.add(new BusAllHoliday("春节", "2017-01-27", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("春节", "2017-01-28", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("春节", "2017-01-29", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("春节", "2017-01-30", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("春节", "2017-01-31", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("春节", "2017-02-01", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("春节", "2017-02-02", new Date()));
+			
+			holiBusAllHoliday.add(new BusAllHoliday("清明节", "2017-04-02", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("清明节", "2017-04-03", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("清明节", "2017-04-04", new Date()));
+
+			holiBusAllHoliday.add(new BusAllHoliday("劳动节", "2017-04-29", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("劳动节", "2017-04-30", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("劳动节", "2017-05-01", new Date()));
+
+			holiBusAllHoliday.add(new BusAllHoliday("端午节", "2017-05-58", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("端午节", "2017-05-59", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("端午节", "2017-05-30", new Date()));
+			
+			holiBusAllHoliday.add(new BusAllHoliday("中秋节", "2017-10-01", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("中秋节", "2017-10-02", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("中秋节", "2017-10-03", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("国庆节", "2017-10-04", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("国庆节", "2017-10-05", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("国庆节", "2017-10-06", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("国庆节", "2017-10-07", new Date()));
+			holiBusAllHoliday.add(new BusAllHoliday("国庆节", "2017-10-08", new Date()));
+
+			for (BusAllHoliday day : holiBusAllHoliday) {
+				// 跟周末冲突的，不重复插入
+				Wrapper<BusAllHoliday> wrapper = new EntityWrapper<>();
+				wrapper.eq("holiday_date", day.getHolidayDate());
+				int count = busAllHolidayService.selectCount(wrapper);
+				if (count == 0) {
+					busAllHolidayService.insert(day);
+				}
+			}
+			// -------------- 剔除补班时间(周末需要补班的)---------------------
+			List<BusAllHoliday> workBusAllHoliday = new ArrayList<BusAllHoliday>();
+			workBusAllHoliday.add(new BusAllHoliday("补班", "2017-01-22", new Date()));
+			workBusAllHoliday.add(new BusAllHoliday("补班", "2017-02-04", new Date()));
+			workBusAllHoliday.add(new BusAllHoliday("补班", "2017-04-06", new Date()));
+			workBusAllHoliday.add(new BusAllHoliday("补班", "2017-05-27", new Date()));
+			workBusAllHoliday.add(new BusAllHoliday("补班", "2017-09-30", new Date()));
+
+			for (BusAllHoliday day : workBusAllHoliday) {
+				System.out.println("剔除日期：" + day.getHolidayDate() + ","
+						+ day.getTitle());
+				Wrapper<BusAllHoliday> wrapper = new EntityWrapper<>();
+				wrapper.eq("holiday_date", day.getHolidayDate());
+				BusAllHoliday preBusAllHoliday = busAllHolidayService
+						.selectOne(wrapper);
+				if (preBusAllHoliday != null) {
+					busAllHolidayService.deleteById(preBusAllHoliday.getId());
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}	
+	
+/*	
+	 * (non-Javadoc)
+	 * 
+	 * @see cn.wj.service.impl.IInsertHoliBusAllHolidayerivce#insertHoliday()
+	 
 	@Override
 	public void insertHoliday() throws Exception {
 		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -123,7 +221,7 @@ public class InsertHolidayServiceImpl implements IInsertHolidayService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	private List<Date> dateSplit(Date start, Date end) throws Exception {
 		if (!start.before(end))

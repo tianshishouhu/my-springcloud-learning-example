@@ -1,11 +1,11 @@
 server:
-  port: 8083
+  port: 8085
 
 eureka:
   client:
     service-url:
-      defaultZone: http://peer1:8888/eureka/
+      defaultZone: http://192.168.2.151:8888/eureka/,http://192.168.2.152:8888/eureka/
 
 spring:
   application:
-    name: cluster-customer-service
+    name: compute-service

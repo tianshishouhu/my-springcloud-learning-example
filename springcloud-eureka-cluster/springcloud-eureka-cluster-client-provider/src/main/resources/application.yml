@@ -1,8 +1,8 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://peer1:8888/eureka/,http://peer2:8889/eureka/
+      defaultZone: http://192.168.2.151:8888/eureka/,http://192.168.2.152:8888/eureka/
 
 spring:
   application:
-    name: cluster-provider-service
+    name: feign-consumer
