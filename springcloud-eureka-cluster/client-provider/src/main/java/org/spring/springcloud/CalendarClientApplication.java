@@ -15,11 +15,11 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 @SpringBootApplication
 // Spring Boot 应用标识
 @EnableFeignClients
-public class CustomerApplication {
+public class CalendarClientApplication {
 
 	public static void main(String[] args) {
 		// 程序启动入口
 		// 启动嵌入式的 Tomcat 并初始化 Spring 环境及其各 Spring 组件
-		SpringApplication.run(CustomerApplication.class, args);
+		SpringApplication.run(CalendarClientApplication.class, args);
 	}
 }
