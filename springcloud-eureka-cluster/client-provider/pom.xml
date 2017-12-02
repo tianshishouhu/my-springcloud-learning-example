@@ -3,9 +3,9 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.neo</groupId>
-    <artifactId>spring-cloud-eureka</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <groupId>cn.wj</groupId>
+    <artifactId>calendar-client</artifactId>
+    <version>1.0.1-releases</version>
     <packaging>jar</packaging>
 
     <name>spring-cloud-eureka</name>
@@ -73,5 +73,16 @@
         </plugins>
     </build>
 
-
+	<distributionManagement>
+	  <repository>
+	      <id>nexus</id>
+	      <name>Releases</name>
+	      <url>http://localhost:8081/repository/maven-releases</url>
+	    </repository>
+	    <snapshotRepository>
+	      <id>nexus</id>
+	      <name>Snapshot</name>
+	      <url>http://localhost:8081/repository/maven-snapshots</url>
+	    </snapshotRepository>
+	  </distributionManagement>
 </project>
